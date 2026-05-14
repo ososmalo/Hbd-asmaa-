@@ -1,107 +1,395 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>عيد ميلاد أسماء</title>
 
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
+
+    :root {
+      --bg1: #12001f;
+      --bg2: #35105c;
+      --bg3: #ff7b8a;
+      --card: rgba(255, 255, 255, 0.13);
+      --border: rgba(255, 255, 255, 0.28);
+      --text: #ffffff;
+      --gold: #ffe08a;
+      --pink: #ff9bb0;
+      --shadow: rgba(255, 180, 200, 0.45);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       min-height: 100vh;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(180deg, #12001f, #3b145f, #ff7b8a);
-      color: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
+      font-family: "Cairo", Arial, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(255, 255, 255, 0.14), transparent 28%),
+        radial-gradient(circle at bottom right, rgba(255, 224, 138, 0.22), transparent 30%),
+        linear-gradient(135deg, var(--bg1), var(--bg2), var(--bg3));
+      color: var(--text);
+      overflow-x: hidden;
       text-align: center;
     }
 
-    .card {
-      width: 85%;
-      max-width: 460px;
-      padding: 35px 25px;
-      border-radius: 25px;
-      background: rgba(255, 255, 255, 0.13);
-      box-shadow: 0 0 35px rgba(255, 180, 200, 0.45);
-      backdrop-filter: blur(12px);
-      animation: appear 1.5s ease;
+    body.theme-royal {
+      --bg1: #05000f;
+      --bg2: #211052;
+      --bg3: #7b2cff;
+      --gold: #f8d66d;
+      --pink: #b58cff;
+      --shadow: rgba(181, 140, 255, 0.45);
+    }
+
+    body.theme-rose {
+      --bg1: #19000a;
+      --bg2: #5c1238;
+      --bg3: #ff7da8;
+      --gold: #ffd1dc;
+      --pink: #ff9bb0;
+      --shadow: rgba(255, 120, 170, 0.45);
+    }
+
+    body.theme-night {
+      --bg1: #030712;
+      --bg2: #0f172a;
+      --bg3: #334155;
+      --gold: #facc15;
+      --pink: #93c5fd;
+      --shadow: rgba(147, 197, 253, 0.35);
+    }
+
+    .background-orbs span {
+      position: fixed;
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.12);
+      filter: blur(2px);
+      animation: drift 12s infinite ease-in-out alternate;
+      z-index: 0;
+    }
+
+    .background-orbs span:nth-child(1) {
+      top: 8%;
+      left: 8%;
+    }
+
+    .background-orbs span:nth-child(2) {
+      bottom: 12%;
+      right: 8%;
+      width: 190px;
+      height: 190px;
+      animation-delay: 2s;
+    }
+
+    .background-orbs span:nth-child(3) {
+      top: 45%;
+      left: 3%;
+      width: 90px;
+      height: 90px;
+      animation-delay: 4s;
+    }
+
+    .page {
+      position: relative;
       z-index: 2;
-      border: 1px solid rgba(255, 220, 230, 0.4);
+      width: min(1100px, 92%);
+      margin: auto;
+      padding: 35px 0 60px;
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+    }
+
+    .main-card {
+      width: min(720px, 100%);
+      padding: 34px 26px;
+      border-radius: 32px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      box-shadow: 0 0 45px var(--shadow);
+      backdrop-filter: blur(16px);
+      animation: appear 1.2s ease;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 8px 18px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid var(--border);
+      color: var(--gold);
+      font-weight: 700;
+      margin-bottom: 14px;
     }
 
     h1 {
-      font-size: 34px;
-      margin-bottom: 15px;
-      text-shadow: 0 0 18px rgba(255, 255, 255, 0.7);
+      margin: 8px 0 10px;
+      font-size: clamp(32px, 7vw, 60px);
+      line-height: 1.2;
+      text-shadow: 0 0 22px rgba(255, 255, 255, 0.5);
     }
 
-    .age {
-      font-size: 24px;
-      color: #ffe08a;
-      font-weight: bold;
-      text-shadow: 0 0 12px rgba(255, 224, 138, 0.8);
-    }
-
-    p {
-      font-size: 20px;
+    .subtitle {
+      font-size: clamp(18px, 4vw, 24px);
       line-height: 1.8;
+      margin: 12px auto 20px;
+      max-width: 620px;
+    }
+
+    .age-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 22px;
+      border-radius: 22px;
+      background: linear-gradient(90deg, rgba(255, 224, 138, 0.25), rgba(255, 155, 176, 0.22));
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      color: var(--gold);
+      font-size: 24px;
+      font-weight: 900;
+      margin: 12px 0;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 20px;
     }
 
     button {
-      margin-top: 20px;
-      padding: 14px 30px;
       border: none;
-      border-radius: 30px;
-      background: linear-gradient(90deg, #ffe08a, #ff9bb0);
-      color: #2b104d;
-      font-size: 18px;
-      font-weight: bold;
+      padding: 14px 24px;
+      border-radius: 999px;
+      font-family: inherit;
+      font-size: 17px;
+      font-weight: 800;
       cursor: pointer;
-      transition: 0.3s;
-      box-shadow: 0 0 18px rgba(255, 180, 200, 0.7);
+      transition: 0.25s ease;
+    }
+
+    .primary {
+      background: linear-gradient(90deg, var(--gold), var(--pink));
+      color: #1f1030;
+      box-shadow: 0 0 20px var(--shadow);
+    }
+
+    .secondary {
+      color: white;
+      background: rgba(255, 255, 255, 0.13);
+      border: 1px solid var(--border);
     }
 
     button:hover {
-      transform: scale(1.08);
-      background: white;
+      transform: translateY(-3px) scale(1.03);
     }
 
-    #message {
-      margin-top: 22px;
+    .message-box {
+      display: none;
+      margin-top: 25px;
+      padding: 22px;
+      border-radius: 24px;
+      background: rgba(0, 0, 0, 0.22);
+      border: 1px solid var(--border);
       font-size: 19px;
-      color: #fff;
-      line-height: 1.9;
+      line-height: 2;
+      animation: softShow 0.7s ease;
     }
 
-    .heart {
-      position: absolute;
+    .section-title {
+      font-size: 32px;
+      margin: 20px 0;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 22px;
+    }
+
+    .mini-card {
+      min-height: 170px;
+      padding: 22px;
+      border-radius: 26px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid var(--border);
+      box-shadow: 0 0 25px rgba(0, 0, 0, 0.16);
+      backdrop-filter: blur(12px);
+      transition: 0.25s ease;
+    }
+
+    .mini-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 0 28px var(--shadow);
+    }
+
+    .mini-card .icon {
+      font-size: 34px;
+      margin-bottom: 8px;
+    }
+
+    .mini-card h3 {
+      margin: 6px 0;
+      color: var(--gold);
+      font-size: 22px;
+    }
+
+    .mini-card p {
+      margin: 8px 0 0;
+      line-height: 1.8;
+      font-size: 17px;
+    }
+
+    .countdown {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .time-box {
+      padding: 18px 8px;
+      border-radius: 22px;
+      background: rgba(0, 0, 0, 0.22);
+      border: 1px solid var(--border);
+    }
+
+    .time-box span {
+      display: block;
+      font-size: 30px;
+      font-weight: 900;
+      color: var(--gold);
+    }
+
+    .time-box small {
+      font-size: 15px;
+      opacity: 0.9;
+    }
+
+    .customizer {
+      margin-top: 28px;
+      padding: 22px;
+      border-radius: 28px;
+      background: rgba(255, 255, 255, 0.11);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+    }
+
+    .theme-buttons {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .theme-buttons button {
+      padding: 11px 18px;
+      font-size: 15px;
+    }
+
+    .footer-note {
+      margin-top: 30px;
+      opacity: 0.9;
+      font-size: 16px;
+    }
+
+    .floating {
+      position: fixed;
       bottom: -50px;
       font-size: 22px;
+      z-index: 1;
       animation: floatUp 6s linear infinite;
-      opacity: 0.8;
+      pointer-events: none;
     }
 
-    @keyframes floatUp {
-      from {
-        transform: translateY(0);
-        opacity: 1;
+    .confetti {
+      position: fixed;
+      top: -20px;
+      width: 10px;
+      height: 16px;
+      background: var(--gold);
+      z-index: 10;
+      animation: fall 3.3s linear forwards;
+      pointer-events: none;
+    }
+
+    @media (max-width: 800px) {
+      .cards {
+        grid-template-columns: 1fr;
       }
-      to {
-        transform: translateY(-110vh);
-        opacity: 0;
+
+      .countdown {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .main-card {
+        padding: 28px 18px;
       }
     }
 
     @keyframes appear {
       from {
         opacity: 0;
-        transform: translateY(40px) scale(0.95);
+        transform: translateY(35px) scale(0.96);
       }
       to {
         opacity: 1;
         transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes softShow {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes floatUp {
+      from {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0.9;
+      }
+      to {
+        transform: translateY(-115vh) rotate(180deg);
+        opacity: 0;
+      }
+    }
+
+    @keyframes fall {
+      from {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+      }
+      to {
+        transform: translateY(105vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    @keyframes drift {
+      from {
+        transform: translate(0, 0);
+      }
+      to {
+        transform: translate(30px, -35px);
       }
     }
   </style>
@@ -109,48 +397,234 @@
 
 <body>
 
-  <div class="card">
-    <h1>🎂 كل سنة وانتي طيبة يا أسماء 🎉</h1>
+  <div class="background-orbs">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
 
-    <p>
-      يوم <b>14 / 8</b> يوم ميلادك ❤️<br>
-      وهتكملي فيه <b>19 سنة</b>.
+  <main class="page">
+
+    <section class="hero">
+      <div class="main-card">
+        <div class="tag">رسالة مخصوصة ليوم 14 / 8</div>
+
+        <h1>🎂 كل سنة وانتي طيبة يا أسماء</h1>
+
+        <p class="subtitle">
+          يوم ميلادك مش مجرد تاريخ، ده يوم يستاهل يتعمله حاجة مختلفة.
+          <br>
+          ودي صفحة صغيرة معمولة مخصوص عشانك.
+        </p>
+
+        <div class="age-badge">✨ 19 سنة ✨</div>
+
+        <div class="buttons">
+          <button class="primary" onclick="showMessage()">افتحي الرسالة</button>
+          <button class="secondary" onclick="celebrate()">احتفال صغير 🎉</button>
+          <button class="secondary" onclick="scrollToCards()">شوفي الدعوات</button>
+        </div>
+
+        <div id="message" class="message-box">
+          كل سنة وانتي طيبة يا أسماء ❤️
+          <br><br>
+          ربنا يجعل عامك الـ 19 سنة ستر ورضا وراحة بال، ويكتبلك فيها الخير في كل خطوة.
+          <br><br>
+          ربنا يرزقك نجاح يفرحك، ودعوة مستجابة، وفرحة تملي قلبك، ويبعد عنك أي حزن أو ضيق.
+          <br><br>
+          وجودك بالنسبالي مميز، وكنت مبسوط بكل كلام بينا حتى لو كان كتير أوقات.
+          <br><br>
+          حبيت أقولك ده في يوم ميلادك من غير ما أطوّل… انتي شخص غالي فعلًا، وكل سنة وانتي بخير ✨
+        </div>
+      </div>
+    </section>
+
+    <section id="cards-section">
+      <h2 class="section-title">دعوات ليكي في السنة الجديدة</h2>
+
+      <div class="cards">
+        <div class="mini-card">
+          <div class="icon">🤍</div>
+          <h3>راحة بال</h3>
+          <p>ربنا يرزقك هدوء في قلبك، وطمأنينة في أيامك، ويبعد عنك أي حاجة توجعك.</p>
+        </div>
+
+        <div class="mini-card">
+          <div class="icon">🌸</div>
+          <h3>فرحة</h3>
+          <p>ربنا يكتبلك فرحة قريبة، وخبر حلو، ولحظة تعوضك عن أي تعب فات.</p>
+        </div>
+
+        <div class="mini-card">
+          <div class="icon">🏆</div>
+          <h3>نجاح</h3>
+          <p>ربنا يوفقك في كل خطوة، ويخلي تعبك له نتيجة تفرح قلبك وتليق بيكي.</p>
+        </div>
+
+        <div class="mini-card">
+          <div class="icon">🕊️</div>
+          <h3>ستر ورضا</h3>
+          <p>ربنا يسترك، ويرضيكي، ويرزقك الخير من حيث لا تحتسبي.</p>
+        </div>
+
+        <div class="mini-card">
+          <div class="icon">💌</div>
+          <h3>كلام من القلب</h3>
+          <p>انتي شخص غالي ومميز، ووجودك بيفرق أكتر مما تتخيلي.</p>
+        </div>
+
+        <div class="mini-card">
+          <div class="icon">🎁</div>
+          <h3>سنة أحلى</h3>
+          <p>يارب السنة دي تكون أخف، وألطف، وأجمل من أي سنة عدّت.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="customizer">
+      <h2 class="section-title">تغيير شكل الصفحة</h2>
+      <p>اختار الثيم اللي شكله أحلى:</p>
+
+      <div class="theme-buttons">
+        <button class="primary" onclick="setTheme('default')">كلاسيك</button>
+        <button class="secondary" onclick="setTheme('rose')">روزي</button>
+        <button class="secondary" onclick="setTheme('royal')">ملكي</button>
+        <button class="secondary" onclick="setTheme('night')">ليلي</button>
+      </div>
+    </section>
+
+    <section class="customizer">
+      <h2 class="section-title">العد التنازلي ليوم 14 / 8</h2>
+
+      <div class="countdown">
+        <div class="time-box">
+          <span id="days">0</span>
+          <small>يوم</small>
+        </div>
+
+        <div class="time-box">
+          <span id="hours">0</span>
+          <small>ساعة</small>
+        </div>
+
+        <div class="time-box">
+          <span id="minutes">0</span>
+          <small>دقيقة</small>
+        </div>
+
+        <div class="time-box">
+          <span id="seconds">0</span>
+          <small>ثانية</small>
+        </div>
+      </div>
+    </section>
+
+    <p class="footer-note">
+      معمولة مخصوص لأسماء — 14 / 8 🎂
     </p>
 
-    <p class="age">✨ Happy Birthday Asmaa ✨</p>
-
-    <button onclick="showMessage()">افتحي الرسالة</button>
-
-    <div id="message"></div>
-  </div>
+  </main>
 
   <script>
     function showMessage() {
-      document.getElementById("message").innerHTML =
-        "كل سنة وانتي طيبة يا أسماء ❤️<br><br>" +
-        "ربنا يجعل عامك الـ 19 سنة ستر ورضا وراحة بال، ويكتبلك فيها الخير في كل خطوة.<br><br>" +
-        "ربنا يرزقك نجاح يفرحك، ودعوة مستجابة، وفرحة تملي قلبك، ويبعد عنك أي حزن أو ضيق.<br><br>" +
-        "وجودك بالنسبالي مميز، وكنت مبسوط بكل كلام بينا حتى لو كان كتير أوقات.<br><br>" +
-        "حبيت أقولك ده في يوم ميلادك من غير ما أطوّل… انتي شخص غالي فعلًا، وكل سنة وانتي بخير ✨";
+      var box = document.getElementById("message");
+      box.style.display = "block";
+      celebrate();
     }
 
-    function createHeart() {
-      var heart = document.createElement("div");
-      heart.className = "heart";
-      heart.innerHTML = "❤️";
-      heart.style.left = Math.random() * 100 + "vw";
-      heart.style.fontSize = Math.random() * 18 + 16 + "px";
-      heart.style.animationDuration = Math.random() * 3 + 4 + "s";
+    function scrollToCards() {
+      document.getElementById("cards-section").scrollIntoView({
+        behavior: "smooth"
+      });
+    }
 
-      document.body.appendChild(heart);
+    function setTheme(theme) {
+      document.body.className = "";
+
+      if (theme === "rose") {
+        document.body.classList.add("theme-rose");
+      }
+
+      if (theme === "royal") {
+        document.body.classList.add("theme-royal");
+      }
+
+      if (theme === "night") {
+        document.body.classList.add("theme-night");
+      }
+
+      celebrate();
+    }
+
+    function createFloatingEmoji() {
+      var emojis = ["❤️", "✨", "🎂", "🎉", "💖", "🌸"];
+      var item = document.createElement("div");
+
+      item.className = "floating";
+      item.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+      item.style.left = Math.random() * 100 + "vw";
+      item.style.fontSize = Math.random() * 18 + 18 + "px";
+      item.style.animationDuration = Math.random() * 3 + 4 + "s";
+
+      document.body.appendChild(item);
 
       setTimeout(function() {
-        heart.remove();
+        item.remove();
       }, 7000);
     }
 
-    setInterval(createHeart, 350);
+    function celebrate() {
+      for (var i = 0; i < 45; i++) {
+        setTimeout(function() {
+          var piece = document.createElement("div");
+
+          piece.className = "confetti";
+          piece.style.left = Math.random() * 100 + "vw";
+          piece.style.background = randomColor();
+          piece.style.animationDuration = Math.random() * 2 + 2.4 + "s";
+          piece.style.transform = "rotate(" + Math.random() * 360 + "deg)";
+
+          document.body.appendChild(piece);
+
+          setTimeout(function() {
+            piece.remove();
+          }, 4500);
+        }, i * 25);
+      }
+    }
+
+    function randomColor() {
+      var colors = ["#ffe08a", "#ff9bb0", "#ffffff", "#b58cff", "#93c5fd", "#ffd1dc"];
+      return colors[Math.floor(Math.random() * colors.length)];
+    }
+
+    function updateCountdown() {
+      var now = new Date();
+      var year = now.getFullYear();
+
+      var birthday = new Date(year, 7, 14, 0, 0, 0);
+
+      if (now > birthday) {
+        birthday = new Date(year + 1, 7, 14, 0, 0, 0);
+      }
+
+      var diff = birthday - now;
+
+      var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      var minutes = Math.floor((diff / (1000 * 60)) % 60);
+      var seconds = Math.floor((diff / 1000) % 60);
+
+      document.getElementById("days").innerHTML = days;
+      document.getElementById("hours").innerHTML = hours;
+      document.getElementById("minutes").innerHTML = minutes;
+      document.getElementById("seconds").innerHTML = seconds;
+    }
+
+    setInterval(createFloatingEmoji, 500);
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
   </script>
 
 </body>
-</html>
+    </html>
