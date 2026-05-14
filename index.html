@@ -9,7 +9,7 @@
       margin: 0;
       min-height: 100vh;
       font-family: Arial, sans-serif;
-      background: linear-gradient(180deg, #090014 0%, #2b104d 45%, #ff9a5c 100%);
+      background: linear-gradient(180deg, #12001f, #3b145f, #ff7b8a);
       color: white;
       display: flex;
       justify-content: center;
@@ -18,41 +18,30 @@
       text-align: center;
     }
 
-    .sun {
-      position: absolute;
-      bottom: -120px;
-      width: 280px;
-      height: 280px;
-      background: radial-gradient(circle, #fff3a3, #ffb347, #ff6f61);
-      border-radius: 50%;
-      box-shadow: 0 0 80px #ffb347, 0 0 150px #ff6f61;
-      animation: rise 5s ease-out forwards;
-    }
-
     .card {
       width: 85%;
       max-width: 460px;
       padding: 35px 25px;
       border-radius: 25px;
       background: rgba(255, 255, 255, 0.13);
-      box-shadow: 0 0 35px rgba(255, 190, 120, 0.5);
+      box-shadow: 0 0 35px rgba(255, 180, 200, 0.45);
       backdrop-filter: blur(12px);
       animation: appear 1.5s ease;
       z-index: 2;
-      border: 1px solid rgba(255, 220, 170, 0.4);
+      border: 1px solid rgba(255, 220, 230, 0.4);
     }
 
     h1 {
       font-size: 34px;
       margin-bottom: 15px;
-      text-shadow: 0 0 20px #ffd27d;
+      text-shadow: 0 0 18px rgba(255, 255, 255, 0.7);
     }
 
     .age {
-      font-size: 25px;
+      font-size: 24px;
       color: #ffe08a;
       font-weight: bold;
-      text-shadow: 0 0 12px #ffb347;
+      text-shadow: 0 0 12px rgba(255, 224, 138, 0.8);
     }
 
     p {
@@ -65,13 +54,13 @@
       padding: 14px 30px;
       border: none;
       border-radius: 30px;
-      background: linear-gradient(90deg, #ffe08a, #ff9a5c);
+      background: linear-gradient(90deg, #ffe08a, #ff9bb0);
       color: #2b104d;
       font-size: 18px;
       font-weight: bold;
       cursor: pointer;
       transition: 0.3s;
-      box-shadow: 0 0 18px rgba(255, 190, 120, 0.7);
+      box-shadow: 0 0 18px rgba(255, 180, 200, 0.7);
     }
 
     button:hover {
@@ -86,32 +75,21 @@
       line-height: 1.9;
     }
 
-    .star {
+    .heart {
       position: absolute;
-      color: #fff4b8;
-      font-size: 18px;
+      bottom: -50px;
+      font-size: 22px;
       animation: floatUp 6s linear infinite;
       opacity: 0.8;
     }
 
-    @keyframes rise {
-      from {
-        bottom: -180px;
-        opacity: 0.5;
-      }
-      to {
-        bottom: -70px;
-        opacity: 1;
-      }
-    }
-
     @keyframes floatUp {
       from {
-        transform: translateY(100vh);
+        transform: translateY(0);
         opacity: 1;
       }
       to {
-        transform: translateY(-20vh);
+        transform: translateY(-110vh);
         opacity: 0;
       }
     }
@@ -131,17 +109,15 @@
 
 <body>
 
-  <div class="sun"></div>
-
   <div class="card">
-    <h1>🌅 كل سنة وانتي طيبة يا أسماء 🎂</h1>
+    <h1>🎂 كل سنة وانتي طيبة يا أسماء 🎉</h1>
 
     <p>
-      يوم <b>14 / 8</b> مش مجرد يوم عادي،<br>
-      ده يوم ميلادك، وبداية سنة جديدة طالعة زي الفجر.
+      يوم <b>14 / 8</b> يوم ميلادك ❤️<br>
+      وهتكملي فيه <b>19 سنة</b>.
     </p>
 
-    <p class="age">✨ 19 سنة من النور ✨</p>
+    <p class="age">✨ Happy Birthday Asmaa ✨</p>
 
     <button onclick="showMessage()">افتحي الرسالة</button>
 
@@ -151,25 +127,29 @@
   <script>
     function showMessage() {
       document.getElementById("message").innerHTML =
-        "كل سنة وانتي طيبة يا أسماء ❤️ أتمنى سنة الـ 19 تكون سنة بازغة وجميلة عليكي، سنة تبدأ بهدوء الفجر وتنور أيامك واحدة واحدة. أتمنى ليكي فرح كتير، وراحة بال، ونجاح، وضحكة ما تغيبش. وبصراحة وجودك دايمًا كان ليه نور مختلف في يومي، وكنت فرحان بكل كلام بينا حتى لو كان كتير شوية. مش عايز أقول حاجة تقيلة في يوم عيد ميلادك، بس حبيت أقولك إنك شخص مميز فعلًا، ويارب السنة الجديدة تكون شبه النور اللي تستاهليه ✨🌅";
+        "كل سنة وانتي طيبة يا أسماء ❤️<br><br>" +
+        "ربنا يجعل عامك الـ 19 سنة ستر ورضا وراحة بال، ويكتبلك فيها الخير في كل خطوة.<br><br>" +
+        "ربنا يرزقك نجاح يفرحك، ودعوة مستجابة، وفرحة تملي قلبك، ويبعد عنك أي حزن أو ضيق.<br><br>" +
+        "وجودك بالنسبالي مميز، وكنت مبسوط بكل كلام بينا حتى لو كان كتير أوقات.<br><br>" +
+        "حبيت أقولك ده في يوم ميلادك من غير ما أطوّل… انتي شخص غالي فعلًا، وكل سنة وانتي بخير ✨";
     }
 
-    function createStar() {
-      var star = document.createElement("div");
-      star.className = "star";
-      star.innerHTML = "✦";
-      star.style.left = Math.random() * 100 + "vw";
-      star.style.fontSize = Math.random() * 18 + 14 + "px";
-      star.style.animationDuration = Math.random() * 3 + 4 + "s";
+    function createHeart() {
+      var heart = document.createElement("div");
+      heart.className = "heart";
+      heart.innerHTML = "❤️";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.fontSize = Math.random() * 18 + 16 + "px";
+      heart.style.animationDuration = Math.random() * 3 + 4 + "s";
 
-      document.body.appendChild(star);
+      document.body.appendChild(heart);
 
       setTimeout(function() {
-        star.remove();
+        heart.remove();
       }, 7000);
     }
 
-    setInterval(createStar, 300);
+    setInterval(createHeart, 350);
   </script>
 
 </body>
